@@ -2,24 +2,24 @@
 
 defined( 'ABSPATH' ) or die();
 
-add_action( 'admin_menu', 'mcn_li_creds_create_plugin_settings_page' );
-add_action( 'admin_init', 'mcn_li_creds_setup_sections' );
-add_action( 'admin_init', 'mcn_li_creds_setup_fields' );
+add_action( 'admin_menu', 'er_li_creds_create_plugin_settings_page' );
+add_action( 'admin_init', 'er_li_creds_setup_sections' );
+add_action( 'admin_init', 'er_li_creds_setup_fields' );
 
-function mcn_li_creds_create_plugin_settings_page() {
+function er_li_creds_create_plugin_settings_page() {
     
     $page_title = 'Linkedin Credentials';
     $menu_title = 'Linkedin Credentials';
     $capability = 'manage_options';
-    $slug       = 'mcn_li_creds_fields';
-    $callback   = 'mcn_li_creds_settings_page_content';
+    $slug       = 'er_li_creds_fields';
+    $callback   = 'er_li_creds_settings_page_content';
     $icon       = 'dashicons-admin-plugins';
     $position   = 152;
     
     add_menu_page( $page_title, $menu_title, $capability, $slug, $callback, $icon, $position );
 }
 
-function mcn_li_creds_settings_page_content() { ?>
+function er_li_creds_settings_page_content() { ?>
     
     <div class="wrap">
         
@@ -29,14 +29,14 @@ function mcn_li_creds_settings_page_content() { ?>
         
             if ( isset( $_GET['settings-updated'] ) && $_GET['settings-updated'] ){
                 
-                mcn_li_creds_admin_notice();
+                er_li_creds_admin_notice();
             } 
         ?>
         <form method="POST" action="options.php">
             <?php
                 
-                settings_fields( 'mcn_li_creds_fields' );
-                do_settings_sections( 'mcn_li_creds_fields' );
+                settings_fields( 'er_li_creds_fields' );
+                do_settings_sections( 'er_li_creds_fields' );
                 submit_button();
             ?>
         </form>
@@ -45,7 +45,7 @@ function mcn_li_creds_settings_page_content() { ?>
     <?php
 }
 
-function mcn_li_creds_admin_notice() { ?>
+function er_li_creds_admin_notice() { ?>
 
     <div class="notice notice-success is-dismissible">
         
@@ -53,50 +53,50 @@ function mcn_li_creds_admin_notice() { ?>
     </div><?php
 }
 
-function mcn_li_creds_setup_sections() {
+function er_li_creds_setup_sections() {
     
-    add_settings_section( 'mcn_li_creds_first_section', '', 'mcn_li_creds_section_callback', 'mcn_li_creds_fields' );
+    add_settings_section( 'er_li_creds_first_section', '', 'er_li_creds_section_callback', 'er_li_creds_fields' );
    
 }
 
-function mcn_li_creds_section_callback( $arguments ) {
+function er_li_creds_section_callback( $arguments ) {
     
     switch( $arguments['id'] ){
         
-        case 'mcn_li_creds_first_section':
+        case 'er_li_creds_first_section':
             //echo 'Section text';
             break;
     }
 }
-function mcn_li_creds_setup_fields() {
+function er_li_creds_setup_fields() {
     
     $fields = array(
         
         array(
-            'uid'           => 'mcn_li_creds_client_id',
+            'uid'           => 'er_li_creds_client_id',
             'label'         => 'Linkedin Client ID',
-            'section'       => 'mcn_li_creds_first_section',
+            'section'       => 'er_li_creds_first_section',
             'type'          => 'text',
             'placeholder'   => 'Linkedin Client ID',
         ),
         array(
-            'uid'           => 'mcn_li_creds_api_secret',
+            'uid'           => 'er_li_creds_api_secret',
             'label'         => 'Linkedin API Secret',
-            'section'       => 'mcn_li_creds_first_section',
+            'section'       => 'er_li_creds_first_section',
             'type'          => 'text',
             'placeholder'   => 'Linkedin API Secret',
         ),
         array(
-            'uid'           => 'mcn_li_creds_company_id',
+            'uid'           => 'er_li_creds_company_id',
             'label'         => 'Company ID',
-            'section'       => 'mcn_li_creds_first_section',
+            'section'       => 'er_li_creds_first_section',
             'type'          => 'text',
             'placeholder'   => 'Company ID',
         ),
         array(
-            'uid'           => 'mcn_li_state_value',
+            'uid'           => 'er_li_state_value',
             'label'         => 'Linkedin State Value',
-            'section'       => 'mcn_li_creds_first_section',
+            'section'       => 'er_li_creds_first_section',
             'type'          => 'text',
             'placeholder'   => 'Enter a random string of characters',
         ),
@@ -105,12 +105,12 @@ function mcn_li_creds_setup_fields() {
     
     foreach( $fields as $field ) {
         
-        add_settings_field( $field['uid'], $field['label'], 'mcn_li_creds_field_callback', 'mcn_li_creds_fields', $field['section'], $field );
-        register_setting( 'mcn_li_creds_fields', $field['uid'] );
+        add_settings_field( $field['uid'], $field['label'], 'er_li_creds_field_callback', 'er_li_creds_fields', $field['section'], $field );
+        register_setting( 'er_li_creds_fields', $field['uid'] );
     }
 }
 
-function mcn_li_creds_field_callback( $arguments ) {
+function er_li_creds_field_callback( $arguments ) {
     
     $value = get_option( $arguments['uid'] );
     

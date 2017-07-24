@@ -36,17 +36,17 @@ function my_cron_schedules($schedules){
 }
 
 add_filter('cron_schedules','my_cron_schedules');
-wp_schedule_event( time(), '5min', 'mcn_li_daily_event' );	
+wp_schedule_event( time(), '5min', 'er_li_daily_event' );	
 
 */
 
-register_activation_hook( __FILE__, 'mcn_li_activation' );
-function mcn_li_activation() {
+register_activation_hook( __FILE__, 'er_li_activation' );
+function er_li_activation() {
 
-	wp_schedule_event( time(), 'daily', 'mcn_li_daily_event' );	
-	//wp_schedule_event( time(), '1min', 'mcn_li_daily_event' );	
+	wp_schedule_event( time(), 'daily', 'er_li_daily_event' );	
+	//wp_schedule_event( time(), '1min', 'er_li_daily_event' );	
 }
-add_action( 'mcn_li_daily_event', 'mcn_li_create_job_post' );
+add_action( 'er_li_daily_event', 'er_li_create_job_post' );
 
 /**
 @ Set up values for use by the functions as well as the options page files
@@ -55,13 +55,13 @@ add_action( 'mcn_li_daily_event', 'mcn_li_create_job_post' );
 $li_args = array();
 $li_args = array(
 
-    'li_client_id'		=> get_option( 'mcn_li_creds_client_id' ),
-    'li_api_secret'		=> get_option( 'mcn_li_creds_api_secret' ),
-    'li_company_id'		=> get_option( 'mcn_li_creds_company_id' ),
-    'li_state_val'		=> get_option( 'mcn_li_state_value' ),
-    'li_oauth_token'	=> get_option( 'mcn_li_oauth_token' ),
-    'li_token_expires'	=> get_option( 'mcn_li_updated_timestamp' ),
-    'li_redirect_uri'	=> 'http://' . $_SERVER['SERVER_NAME'] . '/wp-content/plugins/fetch-linkedin-feed/generate-token.php',
+    'li_client_id'		=> get_option( 'er_li_creds_client_id' ),
+    'li_api_secret'		=> get_option( 'er_li_creds_api_secret' ),
+    'li_company_id'		=> get_option( 'er_li_creds_company_id' ),
+    'li_state_val'		=> get_option( 'er_li_state_value' ),
+    'li_oauth_token'	=> get_option( 'er_li_oauth_token' ),
+    'li_token_expires'	=> get_option( 'er_li_updated_timestamp' ),
+    'li_redirect_uri'	=> 'http://' . $_SERVER['SERVER_NAME'] . '/wp-content/plugins/linkedin-feed-fetcher/generate-token.php',
 );
 
 /**
@@ -76,8 +76,8 @@ include( 'options-pages-oauth.php' );
 */
 
 //function is_user_logged_in() {}
-//mcn_li_create_job_post();
-function mcn_li_create_job_post() {
+//er_li_create_job_post();
+function er_li_create_job_post() {
 
 	global $wpdb;
 	global $li_args;
@@ -226,7 +226,7 @@ function feed_fetcher( $li_args ) {
 
 	// get new value from oauth page
 
-	$expiring 	= get_option( 'mcn_li_updated_timestamp' ) + DAY_IN_SECONDS * 55;
+	$expiring 	= get_option( 'er_li_updated_timestamp' ) + DAY_IN_SECONDS * 55;
 	$expired	= $expiring + DAY_IN_SECONDS * 5;
 
 	if ( $expiring < time() ) {
@@ -251,9 +251,9 @@ function feed_fetcher( $li_args ) {
 /**
 /* Deactivate chron on plugin deactivation
 */
-register_deactivation_hook(__FILE__, 'mcn_li_deactivation' );
+register_deactivation_hook(__FILE__, 'er_li_deactivation' );
 
-function mcn_li_deactivation() {
+function er_li_deactivation() {
 
-	wp_clear_scheduled_hook( 'mcn_li_daily_event' );
+	wp_clear_scheduled_hook( 'er_li_daily_event' );
 }
