@@ -1,5 +1,6 @@
 <?php
-/*Plugin Name: Import Linkedin Jobs Feed
+/*
+Plugin Name: Import Linkedin Jobs Feed
 Plugin URI: http://github.com/evanrose
 Description: Import Linkedin Jobs Feed
 Author: Evan Rose
